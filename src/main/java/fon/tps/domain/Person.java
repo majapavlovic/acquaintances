@@ -4,10 +4,55 @@
  */
 package fon.tps.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
+
 /**
  *
  * @author User
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @NaturalId
+    @Size(min=13, max=13, message="JMBG must be exactly 13 numbers long")
+    private String jmbg;
+    
+    @NotNull
+    private String name;
+    
+    @NotNull
+    private String surname;
+    
+    @NotNull    
+    private LocalDate birthdate;
+    
+    @NotNull
+    private int ageInMonths;
+    
+    @ManyToOne
+    private City cityOfBirth;
+    
+    @ManyToOne
+    private City residence;
     
 }
