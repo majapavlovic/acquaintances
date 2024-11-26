@@ -11,6 +11,10 @@ import lombok.Builder;
  * @author User
  */
 @Builder
-public record CityDto() {
+public record CityDto(
+        Long id,
+        int ptt,
+        String name,
+        int citizens) {
 
 }

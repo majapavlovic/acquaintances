@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,8 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @author User
  */
 @RestController
+@RequestMapping("api/v1/tps/city")
 public class CityController {
-     
+
     @Autowired
     private CityService cityService;
 
@@ -34,25 +36,25 @@ public class CityController {
         CityDto dto = cityService.save(cityDto);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
-    
+
     @GetMapping
     public ResponseEntity<List<CityDto>> getAll() {
         List<CityDto> cities = cityService.getAll();
         return new ResponseEntity<>(cities, HttpStatus.OK);
     }
-    
+
     @GetMapping("{id}")
     public ResponseEntity<CityDto> getById(@PathVariable Long id) throws Exception {
         CityDto city = cityService.getById(id);
         return new ResponseEntity<>(city, HttpStatus.OK);
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) throws Exception {
         cityService.deleteById(id);
         return new ResponseEntity<>("City removed!", HttpStatus.OK);
     }
-    
+
     @PutMapping
     public ResponseEntity<CityDto> update(@Valid @RequestBody CityDto cityDto) throws Exception {
         CityDto subDto = cityService.update(cityDto);

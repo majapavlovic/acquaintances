@@ -4,12 +4,15 @@
  */
 package fon.tps.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -38,15 +41,19 @@ public class Person {
     private String jmbg;
     
     @NotNull
+    @Size(min=2, max=15, message="Name must be between 2 and 15 characters long")
     private String name;
     
     @NotNull
+    @Size(min=2, max=33, message="Name must be between 2 and 30 characters long")
     private String surname;
     
-    @NotNull    
+    @NotNull   
+    @Past
     private LocalDate birthdate;
     
     @NotNull
+    @Column(name="age_in_months")
     private int ageInMonths;
     
     @ManyToOne
