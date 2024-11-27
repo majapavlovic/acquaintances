@@ -5,6 +5,7 @@
 package fon.tps.domain;
 
 import fon.tps.annotation.ValidAgeInMonths;
+import fon.tps.annotation.ValidJmbg;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ import org.hibernate.annotations.NaturalId;
  */
 
 @ValidAgeInMonths
+@ValidJmbg
 @Data
 @Builder
 @NoArgsConstructor

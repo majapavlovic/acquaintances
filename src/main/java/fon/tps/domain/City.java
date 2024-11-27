@@ -40,6 +40,9 @@ public class City {
     @NotNull
     private String name;
     
+    @NotNull
+    private String regionCode; //izvan zahtevanog, dodato zbog validacije jmbg-a
+    
     private int citizens;
     
 }

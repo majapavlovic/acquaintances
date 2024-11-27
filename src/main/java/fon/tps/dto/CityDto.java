@@ -15,6 +15,7 @@ public record CityDto(
         Long id,
         int ptt,
         String name,
+        String regionCode,
         int citizens) {
 
 }

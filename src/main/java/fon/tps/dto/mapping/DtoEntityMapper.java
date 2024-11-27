@@ -24,6 +24,7 @@ public class DtoEntityMapper {
                 city.getId(),
                 city.getPtt(),
                 city.getName(),
+                city.getRegionCode(),
                 city.getCitizens());
         return dto;
     }
@@ -33,6 +34,7 @@ public class DtoEntityMapper {
         city.setId(dto.id());
         city.setPtt(dto.ptt());
         city.setName(dto.name());
+        city.setRegionCode(dto.regionCode());
         city.setCitizens(dto.citizens());
         return city;
     }
