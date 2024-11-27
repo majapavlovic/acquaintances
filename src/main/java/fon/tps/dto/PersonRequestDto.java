@@ -4,6 +4,7 @@
  */
 package fon.tps.dto;
 
+import java.time.LocalDate;
 import lombok.Builder;
 
 /**
@@ -11,6 +12,14 @@ import lombok.Builder;
  * @author User
  */
 @Builder
-public record PersonRequestDto() {
+public record PersonRequestDto(
+        Long id,
+        String jmbg,
+        String name,
+        String surname,
+        LocalDate birthdate,
+        int ageInMonths,
+        Long cityOfBirth,
+        Long residence) {
 
 }

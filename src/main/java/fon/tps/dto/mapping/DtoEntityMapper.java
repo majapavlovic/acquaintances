@@ -5,7 +5,11 @@
 package fon.tps.dto.mapping;
 
 import fon.tps.domain.City;
+import fon.tps.domain.Person;
 import fon.tps.dto.CityDto;
+import fon.tps.dto.PersonRequestDto;
+import fon.tps.dto.PersonResponseDto;
+import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,4 +36,55 @@ public class DtoEntityMapper {
         city.setCitizens(dto.citizens());
         return city;
     }
+
+    public Person mapRequestDtoToPerson(PersonRequestDto dto) {
+        Person p = new Person();
+        p.setId(dto.id());
+        p.setJmbg(dto.jmbg());
+        p.setName(dto.name());
+        p.setSurname(dto.surname());
+        p.setBirthdate(dto.birthdate());
+        p.setAgeInMonths(dto.ageInMonths());
+        return p;
+    }
+
+    public Person mapResponseDtoToPerson(PersonResponseDto dto) {
+        Person p = new Person();
+        p.setId(dto.id());
+        p.setJmbg(dto.jmbg());
+        p.setName(dto.name());
+        p.setSurname(dto.surname());
+        p.setBirthdate(dto.birthdate());
+        p.setAgeInMonths(dto.ageInMonths());
+        p.setCityOfBirth(mapDtoToCity(dto.cityOfBirth()));
+        p.setResidence(mapDtoToCity(dto.residence()));
+        return p;
+    }
+
+    public PersonRequestDto mapPersonToRequestDto(Person p) {
+        PersonRequestDto dto = new PersonRequestDto(
+                p.getId(), p.getJmbg(),
+                p.getName(),
+                p.getSurname(),
+                p.getBirthdate(),
+                p.getAgeInMonths(),
+                p.getCityOfBirth().getId(),
+                p.getResidence().getId()
+        );
+        return dto;
+    }
+
+    public PersonResponseDto mapPersonToResponseDto(Person p) {
+        PersonResponseDto dto = new PersonResponseDto(
+                p.getId(), p.getJmbg(),
+                p.getName(),
+                p.getSurname(),
+                p.getBirthdate(),
+                p.getAgeInMonths(),
+                mapCityToDto(p.getCityOfBirth()),
+                mapCityToDto(p.getResidence())
+        );
+        return dto;
+    }
+
 }

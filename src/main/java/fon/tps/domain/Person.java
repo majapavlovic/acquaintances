@@ -45,7 +45,7 @@ public class Person {
     private String name;
     
     @NotNull
-    @Size(min=2, max=33, message="Name must be between 2 and 30 characters long")
+    @Size(min=2, max=33, message="Surname must be between 2 and 30 characters long")
     private String surname;
     
     @NotNull   
@@ -53,7 +53,6 @@ public class Person {
     private LocalDate birthdate;
     
     @NotNull
-    @Column(name="age_in_months")
     private int ageInMonths;
     
     @ManyToOne

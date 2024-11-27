@@ -5,12 +5,17 @@
 package fon.tps.repository;
 
 import fon.tps.domain.Person;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author User
  */
-public interface PersonRepository extends JpaRepository<Person, Long>{
-    
+public interface PersonRepository extends JpaRepository<Person, Long> {
+
+    Optional<Person> findByJmbg(String jmbg);
+
+    Optional<Person> deleteByJmbg(String jmbg);
+
 }

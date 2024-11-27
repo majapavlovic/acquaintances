@@ -4,10 +4,20 @@
  */
 package fon.tps.dto;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author User
  */
-public record PersonResponseDto() {
+public record PersonResponseDto(
+        Long id,
+        String jmbg,
+        String name,
+        String surname,
+        LocalDate birthdate,
+        int ageInMonths,
+        CityDto cityOfBirth,
+        CityDto residence) {
 
 }

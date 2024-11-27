@@ -11,6 +11,9 @@ import fon.tps.dto.PersonResponseDto;
  *
  * @author User
  */
-public interface PersonService extends DomainService<PersonResponseDto, PersonRequestDto, Long>{
-    
+public interface PersonService extends DomainService<PersonResponseDto, PersonRequestDto, Long> {
+
+    public PersonResponseDto getByJmbg(String jmbg) throws Exception;
+
+    public void deleteByJmbg(String jmbg) throws Exception;
 }
