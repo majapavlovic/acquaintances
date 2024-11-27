@@ -4,6 +4,7 @@
  */
 package fon.tps.domain;
 
+import fon.tps.annotation.ValidAgeInMonths;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,8 @@ import org.hibernate.annotations.NaturalId;
  *
  * @author User
  */
+
+@ValidAgeInMonths
 @Data
 @Builder
 @NoArgsConstructor
