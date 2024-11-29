@@ -28,7 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/tps/person")
 public class PersonController {
-     @Autowired
+
+    @Autowired
     private PersonService personService;
 
     @PostMapping
@@ -36,37 +37,37 @@ public class PersonController {
         PersonResponseDto response = personService.save(dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    
+
     @GetMapping
     public ResponseEntity<List<PersonResponseDto>> getAll() {
         List<PersonResponseDto> people = personService.getAll();
         return new ResponseEntity<>(people, HttpStatus.OK);
     }
-    
+
     @GetMapping("/id/{id}")
     public ResponseEntity<PersonResponseDto> getById(@PathVariable Long id) throws Exception {
         PersonResponseDto person = personService.getById(id);
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
-    
+
     @GetMapping("/jmbg/{jmbg}")
     public ResponseEntity<PersonResponseDto> getByJmbg(@PathVariable String jmbg) throws Exception {
         PersonResponseDto person = personService.getByJmbg(jmbg);
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
-    
+
     @DeleteMapping("/id/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) throws Exception {
         personService.deleteById(id);
         return new ResponseEntity<>("Person removed!", HttpStatus.OK);
     }
-    
-     @DeleteMapping("jmbg/{jmbg}")
+
+    @DeleteMapping("jmbg/{jmbg}")
     public ResponseEntity<String> deleteByJmbg(@PathVariable String jmbg) throws Exception {
         personService.deleteByJmbg(jmbg);
         return new ResponseEntity<>("Person removed!", HttpStatus.OK);
     }
-    
+
     @PutMapping
     public ResponseEntity<PersonResponseDto> update(@Valid @RequestBody PersonRequestDto dto) throws Exception {
         PersonResponseDto response = personService.update(dto);

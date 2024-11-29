@@ -5,8 +5,10 @@
 package fon.tps.repository;
 
 import fon.tps.domain.Person;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 /**
  *
@@ -17,5 +19,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Optional<Person> findByJmbg(String jmbg);
 
     Optional<Person> deleteByJmbg(String jmbg);
+    
+    @Procedure(name = "GetPeopleFromCity")
+    List<Person> getPeopleFromCity(String cityName);
 
 }

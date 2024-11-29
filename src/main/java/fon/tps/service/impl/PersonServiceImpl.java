@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -116,6 +117,15 @@ public class PersonServiceImpl implements PersonService {
     public List<PersonResponseDto> getAll() {
         return personRepository
                 .findAll()
+                .stream().map(entity -> mapper.mapPersonToResponseDto(entity))
+                .collect(Collectors.toList());
+    }
+    
+    @Transactional
+    @Override
+    public List<PersonResponseDto> getAllSmederevci() {
+        return personRepository
+                .getPeopleFromCity("Smederevo")
                 .stream().map(entity -> mapper.mapPersonToResponseDto(entity))
                 .collect(Collectors.toList());
     }

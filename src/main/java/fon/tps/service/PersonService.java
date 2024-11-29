@@ -6,6 +6,7 @@ package fon.tps.service;
 
 import fon.tps.dto.PersonRequestDto;
 import fon.tps.dto.PersonResponseDto;
+import java.util.List;
 
 /**
  *
@@ -16,4 +17,6 @@ public interface PersonService extends DomainService<PersonResponseDto, PersonRe
     public PersonResponseDto getByJmbg(String jmbg) throws Exception;
 
     public void deleteByJmbg(String jmbg) throws Exception;
+    
+    public List<PersonResponseDto> getAllSmederevci();
 }
