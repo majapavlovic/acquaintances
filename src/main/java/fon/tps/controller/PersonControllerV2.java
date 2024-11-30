@@ -4,6 +4,7 @@
  */
 package fon.tps.controller;
 
+import fon.tps.dto.AdultsFromSmederevo;
 import fon.tps.dto.PersonResponseDto;
 import fon.tps.service.PersonService;
 import java.util.List;
@@ -28,6 +29,12 @@ public class PersonControllerV2 {
     @GetMapping("smederevci")
     public ResponseEntity<List<PersonResponseDto>> getAll() {
         List<PersonResponseDto> people = personService.getAllSmederevci();
+        return new ResponseEntity<>(people, HttpStatus.OK);
+    }
+    
+    @GetMapping("smederevci2")
+    public ResponseEntity<List<AdultsFromSmederevo>> getAllFromView() {
+        List<AdultsFromSmederevo> people = personService.getAllSmederevciFromView();
         return new ResponseEntity<>(people, HttpStatus.OK);
     }
 

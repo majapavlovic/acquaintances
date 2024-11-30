@@ -6,6 +6,7 @@ package fon.tps.service.impl;
 
 import fon.tps.domain.City;
 import fon.tps.domain.Person;
+import fon.tps.dto.AdultsFromSmederevo;
 import fon.tps.dto.PersonRequestDto;
 import fon.tps.dto.PersonResponseDto;
 import fon.tps.dto.mapping.DtoEntityMapper;
@@ -120,7 +121,7 @@ public class PersonServiceImpl implements PersonService {
                 .stream().map(entity -> mapper.mapPersonToResponseDto(entity))
                 .collect(Collectors.toList());
     }
-    
+
     @Transactional
     @Override
     public List<PersonResponseDto> getAllSmederevci() {
@@ -129,4 +130,11 @@ public class PersonServiceImpl implements PersonService {
                 .stream().map(entity -> mapper.mapPersonToResponseDto(entity))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AdultsFromSmederevo> getAllSmederevciFromView() {
+        System.out.println(personRepository.getAllSmederevciFromView());
+        return personRepository.getAllSmederevciFromView();
+    }
+
 }

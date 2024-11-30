@@ -38,26 +38,19 @@ public class DabataseSeeder implements CommandLineRunner {
         City city4 = cityRepository.save(new City(null, 16000, "Leskovac", "74", 61581));
         City city5 = cityRepository.save(new City(null, 19000, "Zajecar", "75", 32448));
         City city6 = cityRepository.save(new City(null, 11300, "Smederevo", "76", 60263));
-        
+
         //seed people
-        Person person1 = personRepository.save(new Person(null, "1906977714551", "Marko", "Markovic", 
+        Person person1 = personRepository.save(new Person(null, "1906977714551", "Marko", "Markovic",
                 LocalDate.of(1977, 6, 19), 569, city1, city1));
-        
+
         Person person2 = personRepository.save(new Person(null, "0609966762351", "Petar", "Peric",
                 LocalDate.of(1966, 9, 6), 698, city6, city6));
-//        Person person3 = personRepository.save(new Person(null, "0609966742350", "Voja", "Vojkovic", 
-//                LocalDate.of(1996, 9, 6), 308, city4, city3));
-//        Person person4 = personRepository.save(new Person(null, "2703999715077", "Marija", "Maricic", 
-//                LocalDate.of(1999, 3, 27), 308, city6, city6));
-//        Person person5 = personRepository.save(new Person(null, "2703999715077", "Nevena", "Nenic", 
-//                LocalDate.of(1999, 3, 27), 308, city6, city6));
-//        Person person6 = personRepository.save(new Person(null, "2703999715077", "Toma", "Tomic", 
-//                LocalDate.of(1999, 3, 27), 308, city6, city2));
-//        Person person7 = personRepository.save(new Person(null, "2703999715077", "Nikola", "Nikolic", 
-//                LocalDate.of(1999, 3, 27), 308, city2, city4));
-//        Person person8 = personRepository.save(new Person(null, "2703999715077", "Tijana", "Tinic", 
-//                LocalDate.of(1999, 3, 27), 308, city3, city1));
 
+        Person person3 = personRepository.save(new Person(null, "2709006760011", "Bojan", "Bojic",
+                LocalDate.of(2006, 9, 27), 218, city6, city6));
+
+        Person person4 = personRepository.save(new Person(null, "2412006765126", "Nina", "Nikolic",
+                LocalDate.of(2006, 12, 24), 215, city6, city6));
     }
 
 }
