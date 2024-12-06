@@ -19,6 +19,8 @@ public interface AdultsFromSmederevo {
     String getName();
 
     String getSurname();
+    
+    int getHeightInCm();
 
     LocalDate getBirthdate();
 

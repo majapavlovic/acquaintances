@@ -13,6 +13,7 @@ import fon.tps.dto.mapping.DtoEntityMapper;
 import fon.tps.repository.CityRepository;
 import fon.tps.repository.PersonRepository;
 import fon.tps.service.PersonService;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,6 +34,9 @@ public class PersonServiceImpl implements PersonService {
     private CityRepository cityRepository;
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public PersonResponseDto save(PersonRequestDto t) throws Exception {
@@ -133,8 +137,89 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<AdultsFromSmederevo> getAllSmederevciFromView() {
-        System.out.println(personRepository.getAllSmederevciFromView());
         return personRepository.getAllSmederevciFromView();
     }
 
+    ///SQL STORED PROCEDURE CALLS
+    @Override
+    public PersonResponseDto insertPerson(PersonRequestDto p) {
+
+        Person person = mapper.mapRequestDtoToPerson(p);
+        Optional<City> cityOfBirth = cityRepository.findById(p.cityOfBirth());
+        if (cityOfBirth.isPresent()) {
+            person.setCityOfBirth(cityOfBirth.get());
+        }
+        Optional<City> residence = cityRepository.findById(p.residence());
+        if (residence.isPresent()) {
+            person.setResidence(residence.get());
+        }
+        Person saved = personRepository.insertPerson(
+                p.jmbg(),
+                p.name(),
+                p.surname(),
+                p.heightInCm(),
+                java.sql.Date.valueOf(p.birthdate()),
+                p.ageInMonths(),
+                p.cityOfBirth(),
+                p.residence());
+        return mapper.mapPersonToResponseDto(saved);
+
+    }
+
+    @Override
+    public PersonResponseDto updatePerson(PersonRequestDto p) {
+        Person person = mapper.mapRequestDtoToPerson(p);
+        Optional<City> cityOfBirth = cityRepository.findById(p.cityOfBirth());
+        if (cityOfBirth.isPresent()) {
+            person.setCityOfBirth(cityOfBirth.get());
+        }
+        Optional<City> residence = cityRepository.findById(p.residence());
+        if (residence.isPresent()) {
+            person.setResidence(residence.get());
+        }
+        Person updated = personRepository.updatePerson(
+                p.id(),
+                p.jmbg(),
+                p.name(),
+                p.surname(),
+                p.heightInCm(),
+                java.sql.Date.valueOf(p.birthdate()),
+                p.ageInMonths(),
+                p.cityOfBirth(),
+                p.residence());
+        return mapper.mapPersonToResponseDto(updated);
+    }
+
+    @Override
+    public void deletePerson(Long id) throws Exception {
+
+        Optional<Person> person = personRepository.findById(id);
+        if (person.isPresent()) {
+            personRepository.deletePerson(id);
+        } else {
+            throw new Exception("Person not found");
+        }
+
+    }
+
+    @Override
+    public PersonResponseDto getPersonByJmbg(String jmbg) throws Exception {
+
+        Optional<Person> person = personRepository.getPersonByJmbg(jmbg);
+        if (person.isPresent()) {
+            return mapper.mapPersonToResponseDto(person.get());
+        } else {
+            throw new Exception("Person not found");
+        }
+    }
+
+    @Override
+    public Float findAverageAge() {
+        return personRepository.findAverageAge();
+    }
+
+    @Override
+    public int findMaxHeight() {
+        return personRepository.findMaxHeight();
+    }
 }

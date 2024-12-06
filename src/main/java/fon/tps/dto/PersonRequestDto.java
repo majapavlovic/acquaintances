@@ -17,6 +17,7 @@ public record PersonRequestDto(
         String jmbg,
         String name,
         String surname,
+        int heightInCm,
         LocalDate birthdate,
         int ageInMonths,
         Long cityOfBirth,

@@ -15,6 +15,7 @@ public record PersonResponseDto(
         String jmbg,
         String name,
         String surname,
+        int heightInCm,
         LocalDate birthdate,
         int ageInMonths,
         CityDto cityOfBirth,

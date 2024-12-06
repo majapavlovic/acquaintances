@@ -40,16 +40,16 @@ public class DabataseSeeder implements CommandLineRunner {
         City city6 = cityRepository.save(new City(null, 11300, "Smederevo", "76", 60263));
 
         //seed people
-        Person person1 = personRepository.save(new Person(null, "1906977714551", "Marko", "Markovic",
+        Person person1 = personRepository.save(new Person(null, "1906977714551", "Marko", "Markovic", 187,
                 LocalDate.of(1977, 6, 19), 569, city1, city1));
 
-        Person person2 = personRepository.save(new Person(null, "0609966762351", "Petar", "Peric",
-                LocalDate.of(1966, 9, 6), 698, city6, city6));
+        Person person2 = personRepository.save(new Person(null, "0609966762351", "Petar", "Peric", 178,
+                LocalDate.of(1966, 9, 6), 699, city6, city6));
 
-        Person person3 = personRepository.save(new Person(null, "2709006760011", "Bojan", "Bojic",
+        Person person3 = personRepository.save(new Person(null, "2709006760011", "Bojan", "Bojic", 203,
                 LocalDate.of(2006, 9, 27), 218, city6, city6));
 
-        Person person4 = personRepository.save(new Person(null, "2412006765126", "Nina", "Nikolic",
+        Person person4 = personRepository.save(new Person(null, "2412006765126", "Nina", "Nikolic", 161,
                 LocalDate.of(2006, 12, 24), 215, city6, city6));
     }
 

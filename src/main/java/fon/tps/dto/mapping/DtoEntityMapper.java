@@ -46,6 +46,7 @@ public class DtoEntityMapper {
         p.setJmbg(dto.jmbg());
         p.setName(dto.name());
         p.setSurname(dto.surname());
+        p.setHeightInCm(dto.heightInCm());
         p.setBirthdate(dto.birthdate());
         p.setAgeInMonths(dto.ageInMonths());
         return p;
@@ -57,6 +58,7 @@ public class DtoEntityMapper {
         p.setJmbg(dto.jmbg());
         p.setName(dto.name());
         p.setSurname(dto.surname());
+        p.setHeightInCm(dto.heightInCm());
         p.setBirthdate(dto.birthdate());
         p.setAgeInMonths(dto.ageInMonths());
         p.setCityOfBirth(mapDtoToCity(dto.cityOfBirth()));
@@ -69,6 +71,7 @@ public class DtoEntityMapper {
                 p.getId(), p.getJmbg(),
                 p.getName(),
                 p.getSurname(),
+                p.getHeightInCm(),
                 p.getBirthdate(),
                 p.getAgeInMonths(),
                 p.getCityOfBirth().getId(),
@@ -82,6 +85,7 @@ public class DtoEntityMapper {
                 p.getId(), p.getJmbg(),
                 p.getName(),
                 p.getSurname(),
+                p.getHeightInCm(),
                 p.getBirthdate(),
                 p.getAgeInMonths(),
                 mapCityToDto(p.getCityOfBirth()),
