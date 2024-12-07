@@ -4,8 +4,6 @@
  */
 package fon.tps.domain;
 
-import fon.tps.annotation.ValidAgeInMonths;
-import fon.tps.annotation.ValidJmbg;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,13 +21,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
+import fon.tps.annotation.ValidPersonData;
 
 /**
  *
  * @author User
  */
-@ValidAgeInMonths
-@ValidJmbg
+@ValidPersonData
 @Data
 @Builder
 @NoArgsConstructor

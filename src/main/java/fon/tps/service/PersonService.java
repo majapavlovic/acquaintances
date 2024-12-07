@@ -25,9 +25,9 @@ public interface PersonService extends DomainService<PersonResponseDto, PersonRe
     
     //STORED PROCEDURE CALLS
 
-    public PersonResponseDto insertPerson(PersonRequestDto p);
+    public PersonResponseDto insertPerson(PersonRequestDto p) throws Exception;
 
-    public PersonResponseDto updatePerson(PersonRequestDto p);
+    public PersonResponseDto updatePerson(PersonRequestDto p) throws Exception;
     
     public void deletePerson(Long id) throws Exception;
     

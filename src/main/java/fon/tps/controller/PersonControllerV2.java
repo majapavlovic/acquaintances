@@ -7,6 +7,9 @@ package fon.tps.controller;
 import fon.tps.dto.AdultsFromSmederevo;
 import fon.tps.dto.PersonRequestDto;
 import fon.tps.dto.PersonResponseDto;
+import fon.tps.exception.ResponseObject;
+import fon.tps.exception.InvalidDataException;
+import fon.tps.exception.UnprocessableEntityException;
 import fon.tps.service.PersonService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -34,7 +37,7 @@ public class PersonControllerV2 {
     private PersonService personService;
 
     @GetMapping("smederevci")
-    public ResponseEntity<List<PersonResponseDto>> getAll() {
+    public ResponseEntity<Object> getAll() {
         List<PersonResponseDto> people = personService.getAllSmederevci();
         return new ResponseEntity<>(people, HttpStatus.OK);
     }
@@ -49,6 +52,7 @@ public class PersonControllerV2 {
     public ResponseEntity<PersonResponseDto> save(@Valid @RequestBody PersonRequestDto dto) throws Exception {
         PersonResponseDto response = personService.insertPerson(dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+
     }
 
     @PutMapping

@@ -10,6 +10,7 @@ import java.time.LocalDate;
  *
  * @author User
  */
+
 public interface AdultsFromSmederevo {
 
     Long getId();

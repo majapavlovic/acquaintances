@@ -5,11 +5,13 @@
 package fon.tps.dto;
 
 import java.time.LocalDate;
+import lombok.Builder;
 
 /**
  *
  * @author User
  */
+@Builder
 public record PersonResponseDto(
         Long id,
         String jmbg,

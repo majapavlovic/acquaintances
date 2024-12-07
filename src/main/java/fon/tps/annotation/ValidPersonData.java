@@ -4,7 +4,7 @@
  */
 package fon.tps.annotation;
 
-import fon.tps.validation.AgeInMonthsValidator;
+import fon.tps.validation.PersonValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.ElementType;
@@ -16,11 +16,11 @@ import java.lang.annotation.Target;
  *
  * @author User
  */
-@Constraint(validatedBy = AgeInMonthsValidator.class)
-@Target({ ElementType.TYPE }) 
+@Constraint(validatedBy = PersonValidator.class)
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidAgeInMonths {
-    String message() default "ageInMonths is not consistent with birthdate";
+public @interface ValidPersonData {
+    String message() default "Invalid data!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

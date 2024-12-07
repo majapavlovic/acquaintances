@@ -10,10 +10,12 @@ import fon.tps.dto.AdultsFromSmederevo;
 import fon.tps.dto.PersonRequestDto;
 import fon.tps.dto.PersonResponseDto;
 import fon.tps.dto.mapping.DtoEntityMapper;
+import fon.tps.exception.NotFoundException;
+import fon.tps.exception.UnprocessableEntityException;
 import fon.tps.repository.CityRepository;
 import fon.tps.repository.PersonRepository;
 import fon.tps.service.PersonService;
-import jakarta.persistence.EntityManager;
+import fon.tps.validation.PersonValidator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,21 +38,31 @@ public class PersonServiceImpl implements PersonService {
     private PersonRepository personRepository;
 
     @Autowired
-    private EntityManager entityManager;
+    private final PersonValidator validator;
+
+    public PersonServiceImpl(PersonValidator validator) {
+        this.validator = validator;
+    }
 
     @Override
     public PersonResponseDto save(PersonRequestDto t) throws Exception {
         Person person = mapper.mapRequestDtoToPerson(t);
         Optional<City> cityOfBirth = cityRepository.findById(t.cityOfBirth());
-        if (cityOfBirth.isPresent()) {
-            person.setCityOfBirth(cityOfBirth.get());
-        }
         Optional<City> residence = cityRepository.findById(t.residence());
-        if (residence.isPresent()) {
+
+        if (cityOfBirth.isPresent() && residence.isPresent()) {
+            person.setCityOfBirth(cityOfBirth.get());
             person.setResidence(residence.get());
+
+        } else {
+            throw new UnprocessableEntityException("Person contains a reference to non-existant City");
         }
-        Person saved = personRepository.save(person);
-        return mapper.mapPersonToResponseDto(saved);
+        if (validator.isValidV2(person)) {
+
+            Person saved = personRepository.save(person);
+            return mapper.mapPersonToResponseDto(saved);
+        }
+        return null;
     }
 
     @Override
@@ -59,7 +71,7 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent()) {
             return mapper.mapPersonToResponseDto(person.get());
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "ID", id.toString());
         }
     }
 
@@ -69,7 +81,7 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent()) {
             return mapper.mapPersonToResponseDto(person.get());
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "JMBG", jmbg);
         }
     }
 
@@ -84,17 +96,18 @@ public class PersonServiceImpl implements PersonService {
             updated.setAgeInMonths(t.ageInMonths());
 
             Optional<City> cityOfBirth = cityRepository.findById(t.cityOfBirth());
-            if (cityOfBirth.isPresent()) {
-                updated.setCityOfBirth(cityOfBirth.get());
-            }
-
             Optional<City> residence = cityRepository.findById(t.residence());
-            if (residence.isPresent()) {
+
+            if (cityOfBirth.isPresent() && residence.isPresent()) {
+                updated.setCityOfBirth(cityOfBirth.get());
                 updated.setResidence(residence.get());
+                return mapper.mapPersonToResponseDto(personRepository.save(updated));
+
+            } else {
+                throw new UnprocessableEntityException("Person contains a reference to non-existant City");
             }
-            return mapper.mapPersonToResponseDto(personRepository.save(updated));
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "JMBG", t.jmbg());
         }
     }
 
@@ -104,7 +117,7 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent()) {
             personRepository.delete(person.get());
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "ID", id.toString());
         }
     }
 
@@ -114,7 +127,7 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent()) {
             personRepository.delete(person.get());
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "JMBG", jmbg);
         }
     }
 
@@ -142,27 +155,34 @@ public class PersonServiceImpl implements PersonService {
 
     ///SQL STORED PROCEDURE CALLS
     @Override
-    public PersonResponseDto insertPerson(PersonRequestDto p) {
+    public PersonResponseDto insertPerson(PersonRequestDto p) throws Exception {
 
         Person person = mapper.mapRequestDtoToPerson(p);
         Optional<City> cityOfBirth = cityRepository.findById(p.cityOfBirth());
-        if (cityOfBirth.isPresent()) {
-            person.setCityOfBirth(cityOfBirth.get());
-        }
         Optional<City> residence = cityRepository.findById(p.residence());
-        if (residence.isPresent()) {
+
+        if (cityOfBirth.isPresent() && residence.isPresent()) {
+            person.setCityOfBirth(cityOfBirth.get());
             person.setResidence(residence.get());
+
+        } else {
+            throw new UnprocessableEntityException("Person contains a reference to non-existant City");
         }
-        Person saved = personRepository.insertPerson(
-                p.jmbg(),
-                p.name(),
-                p.surname(),
-                p.heightInCm(),
-                java.sql.Date.valueOf(p.birthdate()),
-                p.ageInMonths(),
-                p.cityOfBirth(),
-                p.residence());
-        return mapper.mapPersonToResponseDto(saved);
+
+        if (validator.isValidV2(person)) {
+            Person saved = personRepository.insertPerson(
+                    p.jmbg(),
+                    p.name(),
+                    p.surname(),
+                    p.heightInCm(),
+                    java.sql.Date.valueOf(p.birthdate()),
+                    p.ageInMonths(),
+                    p.cityOfBirth(),
+                    p.residence());
+            return mapper.mapPersonToResponseDto(saved);
+        }
+
+        return null;
 
     }
 
@@ -170,24 +190,30 @@ public class PersonServiceImpl implements PersonService {
     public PersonResponseDto updatePerson(PersonRequestDto p) {
         Person person = mapper.mapRequestDtoToPerson(p);
         Optional<City> cityOfBirth = cityRepository.findById(p.cityOfBirth());
-        if (cityOfBirth.isPresent()) {
-            person.setCityOfBirth(cityOfBirth.get());
-        }
         Optional<City> residence = cityRepository.findById(p.residence());
-        if (residence.isPresent()) {
+
+        if (cityOfBirth.isPresent() && residence.isPresent()) {
+            person.setCityOfBirth(cityOfBirth.get());
             person.setResidence(residence.get());
+
+        } else {
+            throw new UnprocessableEntityException("Person contains a reference to non-existant City");
         }
-        Person updated = personRepository.updatePerson(
-                p.id(),
-                p.jmbg(),
-                p.name(),
-                p.surname(),
-                p.heightInCm(),
-                java.sql.Date.valueOf(p.birthdate()),
-                p.ageInMonths(),
-                p.cityOfBirth(),
-                p.residence());
-        return mapper.mapPersonToResponseDto(updated);
+        if (validator.isValidV2(person)) {
+            Person updated = personRepository.updatePerson(
+                    p.id(),
+                    p.jmbg(),
+                    p.name(),
+                    p.surname(),
+                    p.heightInCm(),
+                    java.sql.Date.valueOf(p.birthdate()),
+                    p.ageInMonths(),
+                    p.cityOfBirth(),
+                    p.residence());
+            return mapper.mapPersonToResponseDto(updated);
+        }
+
+        return null;
     }
 
     @Override
@@ -197,7 +223,7 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent()) {
             personRepository.deletePerson(id);
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "ID", id.toString());
         }
 
     }
@@ -209,7 +235,7 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent()) {
             return mapper.mapPersonToResponseDto(person.get());
         } else {
-            throw new Exception("Person not found");
+            throw new NotFoundException("Person", "JMBG", jmbg);
         }
     }
 
