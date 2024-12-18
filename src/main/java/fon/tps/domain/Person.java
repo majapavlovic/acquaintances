@@ -32,7 +32,7 @@ import fon.tps.annotation.ValidPersonData;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name="person")
 public class Person {
 
     @Id

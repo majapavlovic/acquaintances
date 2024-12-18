@@ -4,32 +4,26 @@
  */
 package fon.tps.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
+import lombok.Builder;
 
 /**
  *
  * @author User
  */
+@Builder
+public record AdultsFromSmederevo(
+        Long id,
+        String jmbg,
+        String name,
+        String surname,
+        int heightInCm,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        LocalDate birthdate,
+        int ageInMonths,
+        String cityOfBirth,
+        String residence,
+        int residencePTT) {
 
-public interface AdultsFromSmederevo {
-
-    Long getId();
-
-    String getJmbg();
-
-    String getName();
-
-    String getSurname();
-    
-    int getHeightInCm();
-
-    LocalDate getBirthdate();
-
-    int getAgeInMonths();
-
-    String getCityOfBirth();
-
-    String getResidence();
-
-    int getResidencePTT();
 }

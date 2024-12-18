@@ -4,6 +4,7 @@
  */
 package fon.tps.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import lombok.Builder;
 
@@ -18,6 +19,7 @@ public record PersonResponseDto(
         String name,
         String surname,
         int heightInCm,
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate birthdate,
         int ageInMonths,
         CityDto cityOfBirth,

@@ -16,6 +16,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author User
  */
+@CrossOrigin
 @RestController
 @RequestMapping("api/v2/tps/person")
 public class PersonControllerV2 {
@@ -55,9 +57,9 @@ public class PersonControllerV2 {
 
     }
 
-    @PutMapping
-    public ResponseEntity<PersonResponseDto> update(@Valid @RequestBody PersonRequestDto dto) throws Exception {
-        PersonResponseDto response = personService.updatePerson(dto);
+    @PutMapping("/id/{id}")
+    public ResponseEntity<PersonResponseDto> update(@PathVariable Long id, @Valid @RequestBody PersonRequestDto dto) throws Exception {
+        PersonResponseDto response = personService.updatePerson(id,dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

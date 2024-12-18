@@ -6,11 +6,9 @@ package fon.tps.dto.mapping;
 
 import fon.tps.domain.City;
 import fon.tps.domain.Person;
-import fon.tps.dto.AdultsFromSmederevo;
 import fon.tps.dto.CityDto;
 import fon.tps.dto.PersonRequestDto;
 import fon.tps.dto.PersonResponseDto;
-import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 /**

@@ -25,7 +25,7 @@ import org.hibernate.annotations.NaturalId;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name="city")
 public class City {
     
     @Id

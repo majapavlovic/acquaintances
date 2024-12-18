@@ -30,17 +30,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PersonServiceImpl implements PersonService {
 
-    @Autowired
     private DtoEntityMapper mapper;
-    @Autowired
     private CityRepository cityRepository;
-    @Autowired
     private PersonRepository personRepository;
-
-    @Autowired
     private final PersonValidator validator;
 
-    public PersonServiceImpl(PersonValidator validator) {
+    public PersonServiceImpl(DtoEntityMapper mapper, CityRepository cityRepository, PersonRepository personRepository, PersonValidator validator) {
+        this.mapper = mapper;
+        this.cityRepository = cityRepository;
+        this.personRepository = personRepository;
         this.validator = validator;
     }
 
@@ -187,7 +185,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonResponseDto updatePerson(PersonRequestDto p) {
+    public PersonResponseDto updatePerson(Long id, PersonRequestDto p) {
         Person person = mapper.mapRequestDtoToPerson(p);
         Optional<City> cityOfBirth = cityRepository.findById(p.cityOfBirth());
         Optional<City> residence = cityRepository.findById(p.residence());
@@ -201,7 +199,7 @@ public class PersonServiceImpl implements PersonService {
         }
         if (validator.isValidV2(person)) {
             Person updated = personRepository.updatePerson(
-                    p.id(),
+                    id,
                     p.jmbg(),
                     p.name(),
                     p.surname(),
@@ -215,10 +213,8 @@ public class PersonServiceImpl implements PersonService {
 
         return null;
     }
-
     @Override
     public void deletePerson(Long id) throws Exception {
-
         Optional<Person> person = personRepository.findById(id);
         if (person.isPresent()) {
             personRepository.deletePerson(id);
@@ -227,7 +223,7 @@ public class PersonServiceImpl implements PersonService {
         }
 
     }
-
+    
     @Override
     public PersonResponseDto getPersonByJmbg(String jmbg) throws Exception {
 
